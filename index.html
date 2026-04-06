@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAT Winners</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .hidden { display: none !important; }
+        
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #1f2937;
+            color: #f3f4f6;
+        }
+        
+        body.dark-mode .bg-white {
+            background-color: #374151;
+        }
+        
+        body.dark-mode .text-gray-800 {
+            color: #f3f4f6;
+        }
+        
+        body.dark-mode .text-gray-700 {
+            color: #e5e7eb;
+        }
+        
+        body.dark-mode .text-gray-600 {
+            color: #d1d5db;
+        }
+        
+        body.dark-mode .border-gray-300 {
+            border-color: #4b5563;
+        }
+        
+        body.dark-mode .bg-gray-50 {
+            background-color: #1f2937;
+        }
+        
+        body.dark-mode .bg-gray-100 {
+            background-color: #111827;
+        }
+        
+        /* Form inputs in dark mode */
+        body.dark-mode input[type="text"],
+        body.dark-mode input[type="date"],
+        body.dark-mode select {
+            background-color: #4b5563 !important;
+            color: #f3f4f6 !important;
+            border-color: #6b7280 !important;
+        }
+        
+        body.dark-mode input[type="text"]:focus,
+        body.dark-mode input[type="date"]:focus,
+        body.dark-mode select:focus {
+            background-color: #556575 !important;
+            color: #f3f4f6 !important;
+            border-color: #3b82f6 !important;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+        }
+        
+        body.dark-mode input[type="text"]::placeholder,
+        body.dark-mode input[type="date"]::placeholder {
+            color: #9ca3af !important;
+        }
+        
+        body.dark-mode option {
+            background-color: #374151;
+            color: #f3f4f6;
+        }
+        
+        body.dark-mode .dropdown {
+            background-color: #374151;
+            border-color: #4b5563;
+        }
+        
+        body.dark-mode .dropdown-item {
+            color: #e5e7eb;
+        }
+        
+        body.dark-mode .dropdown-item:hover {
+            background-color: #4b5563;
+        }
+        
+        /* Success and status messages in dark mode */
+        body.dark-mode .bg-green-50 {
+            background-color: #064e3b !important;
+        }
+        
+        body.dark-mode .text-green-600 {
+            color: #4ade80 !important;
+        }
+        
+        body.dark-mode .border-green-200 {
+            border-color: #15803d !important;
+        }
+        
+        body.dark-mode .bg-red-50 {
+            background-color: #7f1d1d !important;
+        }
+        
+        body.dark-mode .text-red-600 {
+            color: #fca5a5 !important;
+        }
+        
+        body.dark-mode .border-red-200 {
+            border-color: #991b1b !important;
+        }
+        
+        /* Delete section in dark mode */
+        body.dark-mode .border-t {
+            border-color: #4b5563 !important;
+        }
+        
+        body.dark-mode .text-red-600 {
+            color: #f87171 !important;
+        }
+        
+        body.dark-mode .border-red-600 {
+            border-color: #dc2626 !important;
+        }
+        
+        body.dark-mode #deleteBtn {
+            background-color: transparent !important;
+            border-color: #dc2626 !important;
+            color: #f87171 !important;
+        }
+        
+        body.dark-mode #deleteBtn:hover {
+            background-color: rgba(220, 38, 38, 0.1) !important;
+        }
+        
+        body.dark-mode #deleteBtn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        body.dark-mode #deleteDateInput {
+            background-color: #4b5563 !important;
+            color: #f3f4f6 !important;
+            border-color: #6b7280 !important;
+        }
+        
+        body.dark-mode #deleteDateInput:focus {
+            background-color: #556575 !important;
+            border-color: #dc2626 !important;
+        }
+        
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #3b82f6;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        /* Buttons in dark mode */
+        body.dark-mode button[type="submit"] {
+            background-color: #3b82f6 !important;
+        }
+        
+        body.dark-mode button[type="submit"]:hover {
+            background-color: #2563eb !important;
+        }
+        
+        /* Dropdown Styles for Autocomplete */
+        .dropdown { display: none; position: absolute; background: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; z-index: 50; max-height: 150px; overflow-y: auto; width: 100%; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-top: 0.25rem; }
+        .dropdown.active { display: block; }
+        .dropdown-item { padding: 0.5rem 1rem; cursor: pointer; font-size: 0.875rem; color: #374151; }
+        .dropdown-item:hover { background-color: #f3f4f6; }
+    </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <nav class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-4 text-center flex items-center justify-center gap-3">
+            <img src="https://raw.githubusercontent.com/Thrd37/misty/2168e5c4d7fb06066f6495e6a9e605e60bff3d32/transparent.PNG" alt="HR Logo" class="w-8 h-8">
+            <span class="text-xl font-bold text-gray-800">HR Privilege System</span>
+        </div>
+    </nav>
+    
+    <main class="container mx-auto px-4 py-8 flex-grow">
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="p-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">MAT Submission</h1>
+                
+                <div id="dbStatus" class="mb-6 text-sm text-gray-600 bg-gray-50 p-2 rounded border border-gray-200">
+                    <i data-feather="loader" class="inline w-4 h-4 mr-1 animate-spin"></i> Loading Data Index...
+                </div>
+
+                <form id="submissionForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Sport</label>
+                            <input type="text" id="sportInput" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" placeholder="e.g. Basketball" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Date</label>
+                            <input type="date" id="dateInput" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" required>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- WIN SIDE -->
+                        <div>
+                            <div class="mb-4 grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-gray-700 font-bold text-lg mb-2">WIN</label>
+                                    <label class="block text-gray-700 font-medium mb-2">Team</label>
+                                    <select id="winTeamInput" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" required>
+                                        <option value="">Select team...</option>
+                                        <option value="1">1</option><option value="2">2</option>
+                                        <option value="3">3</option><option value="4">4</option>
+                                        <option value="5">5</option><option value="6">6</option>
+                                        <option value="7">7</option><option value="8">8</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 font-medium mb-2" style="visibility: hidden;">Merit</label>
+                                    <label class="block text-gray-700 font-medium mb-2">Merit (Per Player)</label>
+                                    <input type="text" id="winMeritInput" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" placeholder="Price">
+                                </div>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-700 mb-3">Players</h3>
+                            <div id="winPlayerRowsContainer" class="space-y-3"></div>
+                        </div>
+
+                        <!-- LOSS SIDE -->
+                        <div>
+                            <div class="mb-4 grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-gray-700 font-bold text-lg mb-2">LOSS</label>
+                                    <label class="block text-gray-700 font-medium mb-2">Team</label>
+                                    <select id="lossTeamInput" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" required>
+                                        <option value="">Select team...</option>
+                                        <option value="1">1</option><option value="2">2</option>
+                                        <option value="3">3</option><option value="4">4</option>
+                                        <option value="5">5</option><option value="6">6</option>
+                                        <option value="7">7</option><option value="8">8</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 font-medium mb-2" style="visibility: hidden;">Merit</label>
+                                    <label class="block text-gray-700 font-medium mb-2">Merit (Per Player)</label>
+                                    <input type="text" id="lossMeritInput" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" placeholder="Price">
+                                </div>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-700 mb-3">Players</h3>
+                            <div id="lossPlayerRowsContainer" class="space-y-3"></div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center transition">
+                        <i data-feather="send" class="mr-2"></i> Submit to Sheets
+                    </button>
+
+                    <div id="successMessage" class="hidden text-sm text-green-600 bg-green-50 p-3 rounded border border-green-200">
+                        <i data-feather="check-circle" class="inline w-4 h-4 mr-1"></i> <span id="successText">Submission successful!</span>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                        <h3 class="text-sm font-bold text-red-600 uppercase tracking-wider mb-4">Record Management</h3>
+                        <div class="flex flex-wrap items-end gap-3">
+                            <div class="flex-grow">
+                                <label class="block text-gray-700 text-xs font-medium mb-1">Delete Sheet by Date</label>
+                                <input type="date" id="deleteDateInput" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm bg-gray-50 focus:ring-red-500">
+                            </div>
+                            <button type="button" id="deleteBtn" class="bg-white border border-red-600 text-red-600 hover:bg-red-50 font-semibold py-2 px-4 rounded-lg transition text-sm flex items-center">
+                                <i data-feather="trash-2" class="w-4 h-4 mr-2"></i> Delete Records
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white shadow-sm py-4 mt-8">
+        <div class="container mx-auto px-4 flex items-center justify-between">
+            <div class="flex items-center justify-center gap-3">
+                <i data-feather="trophy" class="w-8 h-8 text-blue-600"></i>
+                <span class="text-xl font-bold text-gray-800">&copy; 2026 HR Privilege System</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="text-sm text-gray-600">Dark Mode</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="themeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- API CONFIGURATION ---
+        const SUBMISSION_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwir80w_m2-DtowjinP8q8KO3q-nVs_Mz8o_VMKv8-_y5bH5qWodnWjU5cqpGm3n5_Q/exec";
+        
+        // Read-Only Database config
+        const DATABASE_SHEET_ID = "1v3VQoSFov4jZYBwA6QaWZcY9_9izu6ROd1Keg3iXlh4";
+        const API_KEY = "AIzaSyAPlKXj0iW1F5MV0NwKN3k5KXJKmt_a4gw";
+        const NAMES_RANGE = "Sheet1!A2:B791"; 
+
+        let allStudents = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const winContainer = document.getElementById('winPlayerRowsContainer');
+            const lossContainer = document.getElementById('lossPlayerRowsContainer');
+            
+            // 1. Generate 25 player rows with dropdown containers for WIN side
+            for(let i=1; i<=25; i++) {
+                winContainer.innerHTML += `
+                    <div class="relative">
+                        <input type="text" id="winPlayerInput${i}" autocomplete="off" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Player ${i} Name">
+                        <div id="winDropdown${i}" class="dropdown"></div>
+                    </div>
+                `;
+            }
+            
+            // Generate 25 player rows with dropdown containers for LOSS side
+            for(let i=1; i<=25; i++) {
+                lossContainer.innerHTML += `
+                    <div class="relative">
+                        <input type="text" id="lossPlayerInput${i}" autocomplete="off" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Player ${i} Name">
+                        <div id="lossDropdown${i}" class="dropdown"></div>
+                    </div>
+                `;
+            }
+
+            // Prevent default form submission on Enter key anywhere in the form
+            document.getElementById('submissionForm').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                }
+            });
+
+            // 2. Fetch Read-Only Database for Indexing
+            async function fetchDatabase() {
+                const dbStatus = document.getElementById('dbStatus');
+                const urlNames = `https://sheets.googleapis.com/v4/spreadsheets/${DATABASE_SHEET_ID}/values/${encodeURIComponent(NAMES_RANGE)}?key=${API_KEY}`;
+                
+                try {
+                    const resNames = await fetch(urlNames).then(r => r.json());
+                    allStudents = resNames.values || [];
+                    dbStatus.className = "mb-6 text-sm text-green-600 bg-green-50 p-2 rounded border border-green-200";
+                    dbStatus.innerHTML = `<i data-feather="check-circle" class="inline w-4 h-4 mr-1"></i> Data Index Loaded (${allStudents.length} names).`;
+                } catch (err) {
+                    dbStatus.className = "mb-6 text-sm text-red-600 bg-red-50 p-2 rounded border border-red-200";
+                    dbStatus.innerHTML = `⚠️ Database offline. Manual entry enabled.`;
+                }
+                feather.replace();
+            }
+            fetchDatabase();
+
+            // 3. Setup dropdown logic and Enter key behavior for WIN and LOSS side inputs
+            function setupDropdownLogic(inputSelector, dropdownSelector) {
+                for(let i=1; i<=25; i++) {
+                    const input = document.getElementById(`${inputSelector}${i}`);
+                    const dropdown = document.getElementById(`${dropdownSelector}${i}`);
+
+                    // Handle typing to show dropdown
+                    input.addEventListener('input', () => {
+                        const val = input.value.toLowerCase().trim();
+                        dropdown.innerHTML = "";
+                        if (!val) { dropdown.classList.remove('active'); return; }
+
+                        const filtered = allStudents.filter(r => r[0] && r[0].toLowerCase().includes(val)).slice(0, 10);
+                        
+                        if (filtered.length > 0) {
+                            dropdown.classList.add('active');
+                            filtered.forEach(r => {
+                                const item = document.createElement('div');
+                                item.className = 'dropdown-item';
+                                item.textContent = r[0];
+                                item.onclick = () => {
+                                    input.value = r[0];
+                                    dropdown.classList.remove('active');
+                                    // Optional: auto-focus next on click too
+                                    if (i < 25) document.getElementById(`${inputSelector}${i+1}`).focus();
+                                };
+                                dropdown.appendChild(item);
+                            });
+                        } else {
+                            dropdown.classList.remove('active');
+                        }
+                    });
+
+                    // NEW: Handle Enter key for auto-fill and jump to next
+                    input.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault(); // Stop form submission
+
+                            // If dropdown has items, pick the first one
+                            if (dropdown.classList.contains('active') && dropdown.children.length > 0) {
+                                input.value = dropdown.children[0].textContent;
+                                dropdown.classList.remove('active');
+                            }
+
+                            // Move focus to the next input field
+                            if (i < 25) {
+                                const nextInput = document.getElementById(`${inputSelector}${i+1}`);
+                                if (nextInput) {
+                                    nextInput.focus();
+                                }
+                            }
+                        }
+                    });
+
+                    // Hide dropdown when clicking outside
+                    document.addEventListener('click', (e) => {
+                        if (e.target !== input && e.target !== dropdown) {
+                            dropdown.classList.remove('active');
+                        }
+                    });
+                }
+            }
+            
+            setupDropdownLogic('winPlayerInput', 'winDropdown');
+            setupDropdownLogic('lossPlayerInput', 'lossDropdown');
+
+            // --- SUBMIT LOGIC ---
+            // Note: To actually submit the form now, users MUST click the submit button.
+            document.getElementById('submitBtn').addEventListener('click', async (e) => {
+                e.preventDefault();
+                const btn = document.getElementById('submitBtn');
+                btn.disabled = true;
+                btn.innerText = "Submitting...";
+
+                const winPlayers = [];
+                const lossPlayers = [];
+                
+                // Collect win side players
+                for(let i=1; i<=25; i++) {
+                    const name = document.getElementById(`winPlayerInput${i}`).value.trim();
+                    if(name) { 
+                        winPlayers.push({ name, side: 'WIN' });
+                    }
+                }
+                
+                // Collect loss side players
+                for(let i=1; i<=25; i++) {
+                    const name = document.getElementById(`lossPlayerInput${i}`).value.trim();
+                    if(name) { 
+                        lossPlayers.push({ name, side: 'LOSS' });
+                    }
+                }
+
+                if (winPlayers.length === 0 && lossPlayers.length === 0) {
+                    alert("Please enter at least one player.");
+                    btn.disabled = false;
+                    btn.innerText = "Submit to Sheets";
+                    return;
+                }
+
+                const payload = {
+                    winTeam: document.getElementById('winTeamInput').value,
+                    winMerit: document.getElementById('winMeritInput').value,
+                    lossTeam: document.getElementById('lossTeamInput').value,
+                    lossMerit: document.getElementById('lossMeritInput').value,
+                    sport: document.getElementById('sportInput').value,
+                    date: document.getElementById('dateInput').value,
+                    players: [...winPlayers, ...lossPlayers]
+                };
+
+                try {
+                    await fetch(SUBMISSION_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    document.getElementById('successMessage').classList.remove('hidden');
+                    
+                    // After success, clear the player rows and merit inputs
+                    for(let i=1; i<=25; i++) {
+                        document.getElementById(`winPlayerInput${i}`).value = '';
+                        document.getElementById(`lossPlayerInput${i}`).value = '';
+                    }
+                    document.getElementById('winMeritInput').value = '';
+                    document.getElementById('lossMeritInput').value = '';
+
+                    setTimeout(() => document.getElementById('successMessage').classList.add('hidden'), 5000);
+                } catch (e) {
+                    alert("Submission error. Check console.");
+                    console.error('Submission error:', e);
+                } finally {
+                    btn.disabled = false;
+                    btn.innerText = "Submit to Sheets";
+                }
+            });
+
+            // Set today's date automatically
+            const today = new Date();
+            document.getElementById('dateInput').valueAsDate = today;
+
+            // --- DELETE LOGIC ---
+            document.getElementById('deleteBtn').addEventListener('click', async () => {
+                const deleteDate = document.getElementById('deleteDateInput').value;
+                if (!deleteDate) {
+                    alert("Please select a date to delete.");
+                    return;
+                }
+
+                if (!confirm(`Are you sure you want to delete all records for ${deleteDate}? This will remove the daily sheet but keep the master RECORDS sheet entries.`)) {
+                    return;
+                }
+
+                const btn = document.getElementById('deleteBtn');
+                btn.disabled = true;
+                btn.innerText = "Deleting...";
+
+                try {
+                    const response = await fetch(SUBMISSION_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: JSON.stringify({ action: 'delete', date: deleteDate })
+                    });
+                    
+                    alert(`Deletion request sent for ${deleteDate}.`);
+                    document.getElementById('deleteDateInput').value = '';
+                } catch (e) {
+                    alert("Deletion error. Check console.");
+                    console.error(e);
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i data-feather="trash-2" class="w-4 h-4 mr-2"></i> Delete Records';
+                    feather.replace();
+                }
+            });
+
+            // Dark Mode Toggle
+            const themeToggle = document.getElementById('themeToggle');
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                themeToggle.checked = true;
+            }
+            
+            themeToggle.addEventListener('change', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+
+            feather.replace();
+        });
+    </script>
+</body>
+</html>
